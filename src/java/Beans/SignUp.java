@@ -135,7 +135,7 @@ public class SignUp {
             FacesContext.getCurrentInstance().addMessage(null, facesMessage);
             
             String sql = "insert into users (fullname, address, phone, email, username, password, type) values (?, ?, ?, ?, ?, ?, ?)";
-            db.update(sql, getName(), getAddress(), getPhone(), getEmail(), getUsername(), getPassword(), getType());
+            db.update(sql, getName(), getAddress(), getPhone(), getEmail(), getUsername(), EncryptedPassword(getPassword()), getType());
             return "success";
             
         } catch (Exception ex) {
@@ -144,6 +144,11 @@ public class SignUp {
             FacesContext.getCurrentInstance().addMessage(null, facesMessage);
             return "fail";
         }
+    }
+    
+    private String EncryptedPassword(String originalPassword) {
+        String hashedPassword = BCrypt.hashpw(originalPassword, BCrypt.gensalt(12));
+        return hashedPassword;        
     }
 
 }
