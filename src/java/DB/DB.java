@@ -4,7 +4,7 @@ package DB;
 import java.sql.*;
 public class DB {
     
-    private final String DB_URL="jdbc:mysql://localhost/db3";
+    private final String DB_URL="jdbc:mysql://localhost/inventory";
     private final String NAME="root";
     private final String PASS="123456";
     
@@ -39,30 +39,28 @@ public class DB {
         return rs ;
     }
     
-    public void insert(String sql, int id, String name, double price,int quantity) throws Exception {
-    
-        stmnt = conn.prepareStatement(sql);
-        stmnt.setInt(1, id);
-        stmnt.setString(2, name);
-        stmnt.setDouble(3, price);
-        stmnt.setInt(4, quantity);
-        stmnt.executeUpdate(); 
-     
-     }
-    
-    public void releaseResourcesNo() throws Exception{
-        if(conn != null)
-            conn.close();
-        if(stmnt != null)
-            stmnt.close();
-        
-    }
+      
     public ResultSet select(String sql) throws Exception {
     
         stmnt = conn.prepareStatement(sql);
         rs = stmnt.executeQuery();       
       
         return rs ;
+    }
+    
+    public void update(String sql, String name, String address, String phone, String email, String username, String password, String type)throws Exception{
+        connect();
+        stmnt = conn.prepareStatement(sql);
+        stmnt.setString(1, name);
+        stmnt.setString(2, address);
+        stmnt.setString(3, phone);
+        stmnt.setString(4, email);
+        stmnt.setString(5, username);
+        stmnt.setString(6, password);
+        stmnt.setString(7, type);
+        stmnt.executeUpdate();
+        releaseResourcesNo();
+        
     }
     
     public void releaseResources() throws Exception{
@@ -73,19 +71,16 @@ public class DB {
         if(rs != null)
             rs.close();
     }
-     public void releaseResources2() throws Exception{
+    
+    public void releaseResourcesNo() throws Exception{
         if(conn != null)
             conn.close();
-        if(mnt != null)
-            mnt.close();
-    }
-    public void updateInsertDelete(String sql) throws Exception {
-        connect();
+        if(stmnt != null)
+            stmnt.close();
         
-        mnt = conn.createStatement();
-        mnt.execute(sql);
-        
-        releaseResources2();
     }
+         
+   
+    
     
 }
