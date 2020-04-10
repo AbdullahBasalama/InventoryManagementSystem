@@ -17,15 +17,15 @@ public class DB {
     
     public void connect () throws Exception {
         Class.forName("com.mysql.jdbc.Driver");
-        conn = DriverManager.getConnection(DB_URL, NAME, PASS);
+        this.conn = DriverManager.getConnection(DB_URL, NAME, PASS);
     }
     
     public ResultSet select(String sql, String p1, String p2) throws Exception {
-    
+        
         stmnt = conn.prepareStatement(sql);
         stmnt.setString(1, p1);
         stmnt.setString(2, p2);
-        rs = stmnt.executeQuery();       
+        rs = stmnt.executeQuery();      
       
         return rs ;
     }

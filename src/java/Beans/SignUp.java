@@ -22,6 +22,7 @@ public class SignUp {
     private String type ;
     private String password ;
     private String rePassword;
+     private char [] passwordStringToChar;
     
     public SignUp() {
     }
@@ -89,19 +90,24 @@ public class SignUp {
     public void setRePassword(String rePassword) {
         this.rePassword = rePassword;
     }
-    
+    private char[] toChar() {
+        String theNewPass = getPassword();
+        char a [] = new char[ theNewPass.length()] ;
+        for(int i = 0; i< theNewPass.length();i++){
+            a[i] = theNewPass.charAt(i);
+        }
+        return a ;
+    }
     public String signUp(){
         FacesMessage facesMessage;
-        String display = getPassword()+ "==" + getName() + "==" + getType();
-        facesMessage = new FacesMessage(FacesMessage.SEVERITY_INFO, display, null);
-        FacesContext.getCurrentInstance().addMessage(null, facesMessage);
         
-        String theReturn = "";
+        
+        String pageTransactionMessage = "";
         try {
             if (getPassword().equals(getRePassword())) {
                 
-                theReturn = signUpHelper();
-                if(theReturn.equals("success")){
+                pageTransactionMessage = signUpHelper();
+                if(pageTransactionMessage.equals("success")){
                     facesMessage = new FacesMessage(FacesMessage.SEVERITY_INFO, "Record been inserted", null);
                     FacesContext.getCurrentInstance().addMessage(null, facesMessage);
                 }
@@ -123,19 +129,20 @@ public class SignUp {
             
         }
         
-        return theReturn ;
+        return pageTransactionMessage ;
     }
     
     private String signUpHelper() throws Exception {
         FacesMessage facesMessage;
         DB db = new DB();
+        passwordStringToChar = toChar();
         try {
             
             facesMessage = new FacesMessage(FacesMessage.SEVERITY_INFO, "Entered the signUpHelper", null);
             FacesContext.getCurrentInstance().addMessage(null, facesMessage);
             
             String sql = "insert into users (fullname, address, phone, email, username, password, type) values (?, ?, ?, ?, ?, ?, ?)";
-            db.update(sql, getName(), getAddress(), getPhone(), getEmail(), getUsername(), EncryptedPassword(getPassword()), getType());
+            db.update(sql, getName(), getAddress(), getPhone(), getEmail(), getUsername(), EncryptedPassword(passwordStringToChar), getType());
             return "success";
             
         } catch (Exception ex) {
@@ -146,9 +153,11 @@ public class SignUp {
         }
     }
     
-    private String EncryptedPassword(String originalPassword) {
+   
+    
+    private String EncryptedPassword(char [] password) {
+        String originalPassword = new String (password);
         String hashedPassword = BCrypt.hashpw(originalPassword, BCrypt.gensalt(12));
-        return hashedPassword;        
+        return hashedPassword;
     }
-
 }

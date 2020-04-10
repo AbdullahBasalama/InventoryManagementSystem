@@ -30,40 +30,35 @@
                 <h:form>
                     <div class="column side" style="padding: 25px;" >
                         <div class="inputWithIcon">
-                            <h:inputText   pt:placeholder="username" value="#{loginBean.username}" /> 
+                            <h:inputText   pt:placeholder="username" value="#{signIn.name}" /> 
                             <i class="fa fa-user fa-lg fa-fw" aria-hidden="true"></i>
                         </div>
 
                         <div class="inputWithIcon">
-                            <h:inputSecret  pt:placeholder="Password"    value="#{loginBean.password}" /> 
+                            <h:inputSecret  pt:placeholder="Password"    value="#{signIn.password}" /> 
                             <i class="fa fa-key fa-lg fa-fw" aria-hidden="true"></i>
                         </div>
 
-                        <p:commandButton  value="Login" action="#{loginBean.checkLogin}"  update="messages" />
-
+                        <p:commandButton  value="Login" action="#{signIn.checkLogin()}"  update="messages" />
+                        
+                        <p:link outcome="signUp" value="new user ?? -- sign up now -- " style="font-size: 15px"/>
                         <p:messages id="messages"  closable="true" />
 
                     </div>
                 </h:form>
 
-                
-                
                 <div class="column middle">
                     <h2>Main Content</h2>
                     <p>Main content comes here !!!!</p>
                 </div>
 
-
-                
-                
                 <div class="column side">
                     <h2>Side</h2>
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit..</p>
                 </div>
             </div>
             <!--   -->
-            
-            
+
             <div class="footer">
                 <p>This is the footer </p>
             </div>
