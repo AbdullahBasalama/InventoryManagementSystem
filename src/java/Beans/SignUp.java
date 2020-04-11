@@ -138,9 +138,6 @@ public class SignUp {
         passwordStringToChar = toChar();
         try {
             
-            facesMessage = new FacesMessage(FacesMessage.SEVERITY_INFO, "Entered the signUpHelper", null);
-            FacesContext.getCurrentInstance().addMessage(null, facesMessage);
-            
             String sql = "insert into users (fullname, address, phone, email, username, password, type) values (?, ?, ?, ?, ?, ?, ?)";
             db.update(sql, getName(), getAddress(), getPhone(), getEmail(), getUsername(), EncryptedPassword(passwordStringToChar), getType());
             return "success";
