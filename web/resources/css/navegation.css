@@ -15,10 +15,54 @@
     text-decoration: none;
 }
 
-
-
 /* Change color on hover */
 .topnav a:hover {
     background-color: #ddd;
     color: black;
 }
+
+.dropdown {
+    float: left;
+}
+
+.dropdown-btn {
+    background-color: inherit;
+    color: #f2f2f2;
+    border: none;
+    outline: none;
+    padding: 14px 16px;
+}
+.dropdown-content {
+    display: none;
+  /*  position: absolute; */
+    background-color: #ccc;
+    float: none;
+    box-shadow: 1px 7px 16px 0 #eae9e9;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #c56161;
+    float: none;
+    box-shadow: 1px 7px 16px 0 #eae9e9;
+    min-width: 270px;
+    margin: 49px 0px 0 0;
+    overflow: auto;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: yellow;
+}
+
+.dropdown-content a {
+    float: none;
+    padding: 14px 16px;
+    display: block;
+    text-align: left;
+}
+
