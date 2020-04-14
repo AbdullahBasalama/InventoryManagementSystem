@@ -22,8 +22,7 @@ public class SignUp {
     private String type ;
     private String password ;
     private String rePassword;
-     private char [] passwordStringToChar;
-    
+        
     public SignUp() {
     }
 
@@ -91,23 +90,21 @@ public class SignUp {
         this.rePassword = rePassword;
     }
     
-    private char[] toChar() {
-        String theNewPass = getPassword();
-        char a [] = new char[ theNewPass.length()] ;
-        for(int i = 0; i< theNewPass.length();i++){
-            a[i] = theNewPass.charAt(i);
-        }
-        return a ;
-    }
     public String signUp(){
-        FacesMessage facesMessage;
         
-        
+        FacesMessage facesMessage;    
         String pageTransactionMessage = "";
         try {
-            if (getPassword().equals(getRePassword())) {
+            if (getPassword().equals(getRePassword())) { // if the two passwords do not matches then show else message
+                
+                /** 
+                 * here we will insert all information to the DB in this private method called signUpHelper(); 
+                 * and it will return either (success) or (fail) so based on that we'll show the message of success or failure
+                 * 
+                 */
                 
                 pageTransactionMessage = signUpHelper();
+                
                 if(pageTransactionMessage.equals("success")){
                     facesMessage = new FacesMessage(FacesMessage.SEVERITY_INFO, "Record been inserted", null);
                     FacesContext.getCurrentInstance().addMessage(null, facesMessage);
@@ -115,32 +112,29 @@ public class SignUp {
                 else{
                     facesMessage = new FacesMessage(FacesMessage.SEVERITY_INFO, "Nothing has been updated", null);
                     FacesContext.getCurrentInstance().addMessage(null, facesMessage);
-                }
-                
-            } else {
+                }                
+            } 
+            else {
                 throw new Exception("Entered password do not match");
-            }
-            
-            
+            }  
         }
         catch(Exception ex){
             String  message = ex.getMessage(); 
             facesMessage = new FacesMessage(FacesMessage.SEVERITY_ERROR, message, null);
-            FacesContext.getCurrentInstance().addMessage(null,  facesMessage);
-            
-        }
-        
+            FacesContext.getCurrentInstance().addMessage(null,  facesMessage);            
+        }        
         return pageTransactionMessage ;
     }
     
     private String signUpHelper() throws Exception {
         FacesMessage facesMessage;
         DB db = new DB();
-        passwordStringToChar = toChar();
+
         try {
             
-            String sql = "insert into users (fullname, address, phone, email, username, password, type) values (?, ?, ?, ?, ?, ?, ?)";
-            db.update(sql, getName(), getAddress(), getPhone(), getEmail(), getUsername(), EncryptedPassword(passwordStringToChar), getType());
+           String sql ="insert into users (fullname, address, phone, email, username, password, type) values (?, ?, ?, ?, ?,md5(?), ?)";
+
+            db.update(sql, getName(), getAddress(), getPhone(), getEmail(), getUsername(), getPassword(), getType());
             return "success";
             
         } catch (Exception ex) {
@@ -149,13 +143,5 @@ public class SignUp {
             FacesContext.getCurrentInstance().addMessage(null, facesMessage);
             return "fail";
         }
-    }
-    
-   
-    
-    private String EncryptedPassword(char [] password) {
-        String originalPassword = new String (password);
-        String hashedPassword = BCrypt.hashpw(originalPassword, BCrypt.gensalt(12));
-        return hashedPassword;
     }
 }
