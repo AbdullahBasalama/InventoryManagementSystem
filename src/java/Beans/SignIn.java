@@ -43,7 +43,7 @@ public class SignIn {
         try {
             facesMessage = new FacesMessage(FacesMessage.SEVERITY_INFO, "Hello from checkLogin", null);
             FacesContext.getCurrentInstance().addMessage(null, facesMessage);
-            db.connect();
+           
             String sql = "SELECT * FROM users WHERE username=? AND password = md5(?)";
 
             rs = db.select(sql, getName(), getPassword());

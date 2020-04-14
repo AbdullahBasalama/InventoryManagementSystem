@@ -2,11 +2,13 @@
 <Scene Scope="Project" version="2">
     <Scope Scope="Faces Configuration Only"/>
     <Scope Scope="Project">
-        <Node id="model page.xhtml" x="62" y="514" zoom="true"/>
-        <Node id="signUp.xhtml" x="243" y="348" zoom="true"/>
-        <Node id="signIn.xhtml" x="141" y="91" zoom="true"/>
-        <Node id="index.xhtml" x="140" y="158" zoom="true"/>
-        <Node id="welcomePrimefaces.xhtml" x="542" y="326" zoom="true"/>
+        <Node id="index.xhtml" x="721" y="253" zoom="true"/>
+        <Node id="welcomePrimefaces.xhtml" x="69" y="298" zoom="true"/>
+        <Node id="model page.xhtml" x="72" y="463" zoom="true"/>
+        <Node id="signUp.xhtml" x="412" y="121" zoom="true"/>
+        <Node id="signIn.xhtml" x="110" y="118" zoom="true"/>
+        <Node id="displayUsers.xhtml" x="718" y="389" zoom="true"/>
+        <Node id="userPage.xhtml" x="720" y="316" zoom="true"/>
     </Scope>
     <Scope Scope="All Faces Configurations"/>
 </Scene>

@@ -32,7 +32,7 @@ public class FillUser {
         DB db = new DB();
         String sql = "select * from users";
         try{
-            db.connect();
+            
             rs = db.select(sql);
             
             while(rs.next()){
