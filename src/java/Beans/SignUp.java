@@ -90,6 +90,7 @@ public class SignUp {
     public void setRePassword(String rePassword) {
         this.rePassword = rePassword;
     }
+    
     private char[] toChar() {
         String theNewPass = getPassword();
         char a [] = new char[ theNewPass.length()] ;

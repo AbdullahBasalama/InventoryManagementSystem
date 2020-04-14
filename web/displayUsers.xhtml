@@ -3,10 +3,11 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <h:head>
-        <title>Model Page</title>
+        <title>Display Users</title>
         <meta charset="utf-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
         <h:outputStylesheet name="css/generalPageTheme.css" />
@@ -34,30 +35,54 @@
 
                     </div>
                 </h:form>
-
-                
-                
                 <div class="column middle">
-                    <h2>Main Content</h2>
-                    <p>main content goes here !!!!!!!!!!</p>
+                    <h1>  <h:outputText value="Display Employee Detail" /></h1>
+                    <h:dataTable value="#{fillUser.ls}" var="user">
+                        <h:column>
+                            <f:facet name="header">Name</f:facet>
+                                #{user.name}
+                        </h:column>
+                        
+                        <h:column>
+                            <f:facet name="header">UserName</f:facet>
+                                #{user.username}
+                        </h:column>
+
+                        <h:column>
+                            <f:facet name="header">Phone</f:facet>
+                                #{user.phone}
+                        </h:column>
+
+                        <h:column>
+                            <f:facet name="header">address</f:facet>
+                                #{user.address}
+                        </h:column>
+
+                        <h:column>
+                            <f:facet name="header">Email</f:facet>
+                                #{user.email}
+                        </h:column>
+                        
+                        <h:column>
+                            <f:facet name="header">Specialty</f:facet>
+                                #{user.type}
+                        </h:column>
+                        
+                    </h:dataTable>
                 </div>
-
-
-                
-                
                 <div class="column side">
                     <h2>Side</h2>
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit..</p>
                 </div>
             </div>
             <!--   -->
-            
-            
+
+
             <div class="footer">
                 <p>This is the footer </p>
             </div>
-            
-            
+
+
         </h:form>
     </h:body>
 </html>
