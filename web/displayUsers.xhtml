@@ -19,7 +19,7 @@
             }
         </style>
     </h:head>
-    
+
     <h:body>
         <h:form> 
             <div class="header">
@@ -32,55 +32,57 @@
             </div>
             <!--   -->
             <div class="row">
-                 <!--  this is the side column from the left  -->
+                <!--  this is the side column from the left  -->
                 <h:form>
-                    <div class="column side" style="padding: 25px; width: 40%; background-color: crimson;" >
-                        
+                    <div class="column side" style="padding: 25px; width: 40%;" >
+
                         <table border="0">
 
-                                <tbody>
-                                    
-                                    <tr>
-                                        <td>Username:</td>  
-                                        <td> <p:inputText pt:placeholder="Enter username to see other info  " value="#{userSelect.username}" maxlength="50"/> </td>
-                                        <!--  -->
-                                    </tr>
-                                    
-                                    <tr>
-                                        <td>Name:</td>
-                                        <td> <p:inputText value="#{userSelect.name}" maxlength="50"/> </td>
-                                    </tr>
-                                    
-                                    
-                                    
-                                    <tr> 
-                                        <td>Address:</td>
-                                        <td> <p:inputText value="#{userSelect.address}"  maxlength="50" /> </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Email:</td>
-                                        <td> <p:inputText value="#{userSelect.email}"  maxlength="50" /> </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Phone:</td>
-                                        <td> <p:inputText value="#{userSelect.phone}"  maxlength="20" /> </td>
-                                    </tr>
-                                    <!--
-                                    <tr>
-                                        <td>
-                                            <p:outputLabel for="type" value="Specialty"/>
-                                        </td>
-                                        <td>
-                                            <p:selectOneRadio id="type" value="" required="true">
-                                                <f:selectItem itemLabel="Administrator" itemValue="admin"/>
-                                                <f:selectItem itemLabel="User" itemValue="user"/>
-                                            </p:selectOneRadio>
-                                        </td>
-                                    </tr>  
-                                    -->
-                                </tbody>
-                            </table>
-                            
+                            <tbody>
+                                <tr>
+                                    <h3>You can search based on Username</h3>
+                                </tr>
+                                <tr>
+                                    <td>Username:</td>  
+                                    <td> <p:inputText pt:placeholder="Enter username to see other info  " value="#{userSelect.username}" maxlength="50"/> </td>
+                                    <!--  -->
+                                </tr>
+
+                                <tr>
+                                    <td>Name:</td>
+                                    <td> <p:inputText value="#{userSelect.name}" maxlength="50"/> </td>
+                                </tr>
+
+
+
+                                <tr> 
+                                    <td>Address:</td>
+                                    <td> <p:inputText value="#{userSelect.address}"  maxlength="50" /> </td>
+                                </tr>
+                                <tr>
+                                    <td>Email:</td>
+                                    <td> <p:inputText value="#{userSelect.email}"  maxlength="50" /> </td>
+                                </tr>
+                                <tr>
+                                    <td>Phone:</td>
+                                    <td> <p:inputText value="#{userSelect.phone}"  maxlength="20" /> </td>
+                                </tr>
+                                <!--
+                                <tr>
+                                    <td>
+                                        <p:outputLabel for="type" value="Specialty"/>
+                                    </td>
+                                    <td>
+                                        <p:selectOneRadio id="type" value="" required="true">
+                                            <f:selectItem itemLabel="Administrator" itemValue="admin"/>
+                                            <f:selectItem itemLabel="User" itemValue="user"/>
+                                        </p:selectOneRadio>
+                                    </td>
+                                </tr>  
+                                -->
+                            </tbody>
+                        </table>
+
                         <div class="control">
                             <h:commandButton action="#{userSelect.select()}" value="select"/>
                             <h:commandButton action="#{userSelect.update()}" value="update"/>
@@ -91,15 +93,15 @@
                         </div>
                     </div>
                 </h:form>
-                 <!-- this the column in the middle page  -->
-                <div class="column middle" style="width: 50%;background-color: antiquewhite;">
-                    <h1>  <h:outputText value="Display Employee Detail" /></h1>
+                <!-- this the column in the middle page  -->
+                <div class="column middle" style="width: 50%;">
+                    <h1>  <h:outputText value="Employee Detail" /></h1>
                     <h:dataTable border="1" value="#{fillUser.ls}" var="user" >
                         <h:column>
                             <f:facet name="header">Name</f:facet>
                                 #{user.name}
                         </h:column>
-                        
+
                         <h:column>
                             <f:facet name="header">UserName</f:facet>
                                 #{user.username}
@@ -119,16 +121,16 @@
                             <f:facet name="header">Email</f:facet>
                                 #{user.email}
                         </h:column>
-                        
+
                         <h:column>
                             <f:facet name="header">Specialty</f:facet>
                                 #{user.type}
                         </h:column>
-                        
+
                     </h:dataTable>
                 </div>
-               
-                 <div class="column side" style="width: 10%;">
+
+                <div class="column side" style="width: 10%;">
                     <h2>Side</h2>
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit..</p>
                 </div>
