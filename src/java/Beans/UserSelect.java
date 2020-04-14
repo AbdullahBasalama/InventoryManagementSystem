@@ -3,23 +3,63 @@ package Beans;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import DB.*;
+import Model.User;
 import java.sql.ResultSet;
+import java.util.List;
+import java.util.LinkedList;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
 @ManagedBean
 @RequestScoped
 public class UserSelect {
-
+    
+    private int id ;    
     private String name;
     private String address;
     private String phone;
     private String email;
     private String username;
     private String type;
-
+    private List <Integer> fillId;
+    
     public UserSelect() {
+        ResultSet rs = null;
+        fillId = new LinkedList<> ();
+        DB db = new DB();
+        
+        try{
+            
+            String sql = "select id from users";          
+            rs = db.select(sql);
+            while(rs.next()){
+                fillId.add(rs.getInt("id"));
+            }
+            db.releaseResources();
+            
+        }catch(Exception ex){
+            String  message = ex.getMessage(); 
+            FacesMessage facesMessage = new FacesMessage(FacesMessage.SEVERITY_ERROR, message, null);
+            FacesContext.getCurrentInstance().addMessage(null, facesMessage);
+        }
+
     }
+
+    public List<Integer> getFillId() {
+        return fillId;
+    }
+
+    public void setFillId(List<Integer> fillId) {
+        this.fillId = fillId;
+    }
+    
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }    
 
     public String getName() {
         return name;
@@ -70,24 +110,27 @@ public class UserSelect {
     }
 
     // -------------------------------- functions ----------------------------------------//
+    
     /**
      * select function selects all the fields of the employee based on the
      * UserName. and they should be displayed on the text fields.
      */
+    
     public void select() {
         DB db = new DB();
         ResultSet rs = null;
         try {
 
-            String sql = "select * from users where username=?";
+            String sql = "select * from users where id=?";
             /**
              * this function establishes connection and do the select based on
-             * the sql statement operation and return a result set; | | \ / +
+             * the sql statement operation and return a result set;
              */
 
-            rs = db.select(sql, getUsername());
+            rs = db.select(sql, getId());
 
             if (rs.next()) {
+                
                 name = rs.getString("fullname");
                 address = rs.getString("address");
                 phone = rs.getString("phone");
@@ -119,16 +162,18 @@ public class UserSelect {
         DB db = new DB();
         try {
 
-            String sql = "update users set fullname=?,address=?, email=?, phone=? where username=? ";
-            db.update(sql, name, address, email, phone, username);
+            String sql = "update users set fullname=?, address=?, email=?, phone=?, username=?, type=? where id=? ";
+            db.update(sql, name, address, email, phone, username, type, id);
 
             FacesMessage facesMessage = new FacesMessage(FacesMessage.SEVERITY_INFO, "Record is Updated", null);
             FacesContext.getCurrentInstance().addMessage(null, facesMessage);
+            
         } catch (Exception ex) {
             String message = ex.getMessage();
             FacesMessage facesMessage = new FacesMessage(FacesMessage.SEVERITY_ERROR, message, null);
             FacesContext.getCurrentInstance().addMessage(null, facesMessage);
         }
+//        reset();
     }
 
     /**
@@ -139,8 +184,8 @@ public class UserSelect {
         DB db = new DB();
         try {
 
-            String sql = "delete from users where username=? ";
-            db.update(sql, username);
+            String sql = "delete from users where id=? ";
+            db.update(sql, id);
 
             FacesMessage facesMessage = new FacesMessage(FacesMessage.SEVERITY_INFO, "Record is deleted", null);
             FacesContext.getCurrentInstance().addMessage(null, facesMessage);
@@ -157,6 +202,5 @@ public class UserSelect {
         phone = "";
         email = "";
         username = "";
-        type = "";
     }
 }

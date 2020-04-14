@@ -29,7 +29,7 @@ public class DB {
       
         return rs ;
     }
-    // this method used in the userSelect.java to get the values of the user.
+
     public ResultSet select(String sql, String p1) throws Exception {
         connect();
         stmnt = conn.prepareStatement(sql);
@@ -38,7 +38,7 @@ public class DB {
       
         return rs ;
     }
-    //here I will use this method to get all info by id, so Should i change this type to ( ....., int p1) ??
+        // this method used in the userSelect.java to get the values of the user.
     public ResultSet select(String sql, int p1) throws Exception {
         connect();
         stmnt = conn.prepareStatement(sql);
@@ -70,9 +70,10 @@ public class DB {
         stmnt.executeUpdate();
         releaseResourcesNo();        
     }
+    
     //    this update statement used in UserSelect.java to update the user info
-    //    update users set name=?,address=?, email=?, phone=? where username=? 
-    public void update(String sql, String p1, String p2, String p3, String p4, String p5)throws Exception {
+    //    update users set name=?,address=?, email=?, phone=?, username=?,type=? where id=?;
+    public void update(String sql, String p1, String p2, String p3, String p4, String p5, String p6, int p7)throws Exception {
         connect();
         stmnt = conn.prepareStatement(sql);
         
@@ -81,23 +82,26 @@ public class DB {
         stmnt.setString(3, p3);
         stmnt.setString(4, p4);
         stmnt.setString(5, p5);
+        stmnt.setString(6, p6);
+        stmnt.setInt(7,p7);
         
         stmnt.executeUpdate();
         releaseResourcesNo();        
     }
     
     // used in UserSelect.java to delete a user
-    public void update(String sql, String p1)throws Exception {
+    public void update(String sql, int p1)throws Exception {
         connect();
         stmnt = conn.prepareStatement(sql);
         
-        stmnt.setString(1, p1);
+        stmnt.setInt(1, p1);
        
         stmnt.executeUpdate();
         releaseResourcesNo();        
     }
     
     public void releaseResources() throws Exception{
+        
         if(conn != null)
             conn.close();
         if(stmnt != null)

@@ -40,21 +40,29 @@
 
                             <tbody>
                                 <tr>
-                                    <h3>You can search based on Username</h3>
+                                    <h3>search </h3>
+                                </tr>
+                                <tr>
+                                    <h:form>
+                                    <h:outputText value="Select ID"/>
+                                    <h:selectOneMenu value="#{userSelect.id}"  >
+                                        <f:selectItems value="#{userSelect.fillId}" />
+                                    </h:selectOneMenu>
+                                    <!-- command button should selects everything 
+                                    <h:commandButton value="select" action="#{selectCustomer.customerData}" />
+                                    -->
+                                    </h:form>
                                 </tr>
                                 <tr>
                                     <td>Username:</td>  
-                                    <td> <p:inputText pt:placeholder="Enter username to see other info  " value="#{userSelect.username}" maxlength="50"/> </td>
-                                    <!--  -->
+                                    <td> <p:inputText value="#{userSelect.username}" maxlength="50"/> </td>
+                                    <!-- pt:placeholder="Enter username to see other info" -->
                                 </tr>
 
                                 <tr>
                                     <td>Name:</td>
                                     <td> <p:inputText value="#{userSelect.name}" maxlength="50"/> </td>
                                 </tr>
-
-
-
                                 <tr> 
                                     <td>Address:</td>
                                     <td> <p:inputText value="#{userSelect.address}"  maxlength="50" /> </td>
@@ -67,19 +75,23 @@
                                     <td>Phone:</td>
                                     <td> <p:inputText value="#{userSelect.phone}"  maxlength="20" /> </td>
                                 </tr>
-                                <!--
+                               
                                 <tr>
                                     <td>
-                                        <p:outputLabel for="type" value="Specialty"/>
+                                        <h:outputText value="Specialty"/>
                                     </td>
                                     <td>
-                                        <p:selectOneRadio id="type" value="" required="true">
-                                            <f:selectItem itemLabel="Administrator" itemValue="admin"/>
-                                            <f:selectItem itemLabel="User" itemValue="user"/>
-                                        </p:selectOneRadio>
+                                        <h:form>
+                                            
+                                            <h:selectOneMenu value="#{userSelect.type}"  >
+                                                <f:selectItem itemValue="admin" itemLabel="Admin" />
+                                                <f:selectItem itemValue="user" itemLabel="User" />
+                                            </h:selectOneMenu>
+
+                                        </h:form>
                                     </td>
                                 </tr>  
-                                -->
+                                
                             </tbody>
                         </table>
 
@@ -96,7 +108,12 @@
                 <!-- this the column in the middle page  -->
                 <div class="column middle" style="width: 50%;">
                     <h1>  <h:outputText value="Employee Detail" /></h1>
-                    <h:dataTable border="1" value="#{fillUser.ls}" var="user" >
+                    <h:dataTable border="1" value="#{fillUser.userInfo}" var="user" >
+                        
+                        <h:column>
+                            <f:facet name="header">ID</f:facet>
+                                #{user.id}
+                        </h:column>                            
                         <h:column>
                             <f:facet name="header">Name</f:facet>
                                 #{user.name}

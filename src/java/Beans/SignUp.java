@@ -90,7 +90,7 @@ public class SignUp {
         this.rePassword = rePassword;
     }
     
-    public String signUp(){
+    public String sign(){
         
         FacesMessage facesMessage;    
         String pageTransactionMessage = "";
@@ -103,7 +103,7 @@ public class SignUp {
                  * 
                  */
                 
-                pageTransactionMessage = signUpHelper();
+                pageTransactionMessage = Iloveyou();
                 
                 if(pageTransactionMessage.equals("success")){
                     facesMessage = new FacesMessage(FacesMessage.SEVERITY_INFO, "Record been inserted", null);
@@ -126,7 +126,7 @@ public class SignUp {
         return pageTransactionMessage ;
     }
     
-    private String signUpHelper() throws Exception {
+    private String Iloveyou() throws Exception {
         FacesMessage facesMessage;
         DB db = new DB();
 

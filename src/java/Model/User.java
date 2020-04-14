@@ -1,6 +1,7 @@
 package Model;
 
 public class User {
+    private int id ;
     private String name;
     private String address ;
     private String phone ;
@@ -11,6 +12,14 @@ public class User {
     
     
     public User() {
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
     
     public String getName() {
