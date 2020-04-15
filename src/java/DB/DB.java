@@ -2,6 +2,8 @@
 package DB;
 
 import java.sql.*;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 public class DB {
     
     private final String DB_URL="jdbc:mysql://localhost/inventory";
@@ -12,8 +14,11 @@ public class DB {
     PreparedStatement stmnt = null ;
     ResultSet rs = null ;
     
+    //------------------D7---------------------------//
     
-    
+    Statement stmt = null;
+   
+    //------------------Functions---------------------//
     
     public void connect () throws Exception {
         Class.forName("com.mysql.jdbc.Driver");
@@ -117,5 +122,63 @@ public class DB {
         if(stmnt != null)
             stmnt.close();
         
+    }
+    
+    //-----------------------------D7-----------------------------------//
+    
+    public void createConnection() throws Exception {
+        Class.forName("com.mysql.jdbc.Driver");
+        conn = DriverManager.getConnection(DB_URL, NAME, PASS);
+    }
+
+    public void releaseResources22() throws Exception {
+        try {
+            if (stmt != null) {
+                stmt.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+            if (rs != null) {
+                rs.close();
+            }
+        } catch (Exception ex) {
+            String message = ex.getMessage();
+            FacesMessage facesMessage = new FacesMessage(FacesMessage.SEVERITY_ERROR, message, null);
+            FacesContext.getCurrentInstance().addMessage(null, facesMessage);
+        } finally {
+            if (stmt != null) {
+                stmt.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+            if (rs != null) {
+                rs.close();
+            }
+
+        }
+
+    }
+    //this Statement already defined
+//    public ResultSet select(String Q) throws Exception {
+//        createConnection();
+//        stmt = conn.createStatement();
+//        rs = stmt.executeQuery(Q);
+//        return rs;
+//    }
+
+    public void InsertUpdateDelete(String Q) throws Exception {
+        createConnection();
+        stmt = conn.createStatement();
+        stmt.execute(Q);
+
+        if (stmt != null) {
+            stmt.close();
+        }
+        if (conn != null) {
+            conn.close();
+        }
+
     }
 }
