@@ -2,11 +2,14 @@
 package Beans;
 import DB.DB;
 import BCrypt.*;
+import java.io.IOException;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletRequest;
 
 
 @ManagedBean
@@ -103,9 +106,10 @@ public class SignUp {
                  * 
                  */
                 
-                pageTransactionMessage = Iloveyou();
+                pageTransactionMessage = signUpHelper();
                 
                 if(pageTransactionMessage.equals("success")){
+                    reload();
                     facesMessage = new FacesMessage(FacesMessage.SEVERITY_INFO, "Record been inserted", null);
                     FacesContext.getCurrentInstance().addMessage(null, facesMessage);
                 }
@@ -126,7 +130,7 @@ public class SignUp {
         return pageTransactionMessage ;
     }
     
-    private String Iloveyou() throws Exception {
+    private String signUpHelper() throws Exception {
         FacesMessage facesMessage;
         DB db = new DB();
 
@@ -143,5 +147,10 @@ public class SignUp {
             FacesContext.getCurrentInstance().addMessage(null, facesMessage);
             return "fail";
         }
+    }
+    
+     public void reload() throws IOException {
+        ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+        ec.redirect(((HttpServletRequest) ec.getRequest()).getRequestURI());
     }
 }

@@ -4,41 +4,44 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import DB.*;
 import Model.User;
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.util.List;
 import java.util.LinkedList;
 import javax.faces.application.FacesMessage;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletRequest;
 
 @ManagedBean
 @RequestScoped
 public class UserSelect {
-    
-    private int id ;    
+
+    private int id;
     private String name;
     private String address;
     private String phone;
     private String email;
     private String username;
     private String type;
-    private List <Integer> fillId;
-    
+    private List<Integer> fillId;
+
     public UserSelect() {
         ResultSet rs = null;
-        fillId = new LinkedList<> ();
+        fillId = new LinkedList<>();
         DB db = new DB();
-        
-        try{
-            
-            String sql = "select id from users";          
+
+        try {
+
+            String sql = "select id from users";
             rs = db.select(sql);
-            while(rs.next()){
+            while (rs.next()) {
                 fillId.add(rs.getInt("id"));
             }
             db.releaseResources();
-            
-        }catch(Exception ex){
-            String  message = ex.getMessage(); 
+
+        } catch (Exception ex) {
+            String message = ex.getMessage();
             FacesMessage facesMessage = new FacesMessage(FacesMessage.SEVERITY_ERROR, message, null);
             FacesContext.getCurrentInstance().addMessage(null, facesMessage);
         }
@@ -52,14 +55,14 @@ public class UserSelect {
     public void setFillId(List<Integer> fillId) {
         this.fillId = fillId;
     }
-    
+
     public int getId() {
         return id;
     }
 
     public void setId(int id) {
         this.id = id;
-    }    
+    }
 
     public String getName() {
         return name;
@@ -110,18 +113,17 @@ public class UserSelect {
     }
 
     // -------------------------------- functions ----------------------------------------//
-    
     /**
      * select function selects all the fields of the employee based on the
      * UserName. and they should be displayed on the text fields.
      */
-    
     public void select() {
         DB db = new DB();
         ResultSet rs = null;
         try {
 
             String sql = "select * from users where id=?";
+            
             /**
              * this function establishes connection and do the select based on
              * the sql statement operation and return a result set;
@@ -130,7 +132,7 @@ public class UserSelect {
             rs = db.select(sql, getId());
 
             if (rs.next()) {
-                
+
                 name = rs.getString("fullname");
                 address = rs.getString("address");
                 phone = rs.getString("phone");
@@ -160,17 +162,21 @@ public class UserSelect {
      */
     public void update() {
         DB db = new DB();
+        FacesMessage facesMessage;
+        facesMessage = new FacesMessage(FacesMessage.SEVERITY_ERROR, type, null);
+        FacesContext.getCurrentInstance().addMessage(null, facesMessage);
         try {
 
             String sql = "update users set fullname=?, address=?, email=?, phone=?, username=?, type=? where id=? ";
-            db.update(sql, name, address, email, phone, username, type, id);
+            db.update(sql, name, address, email, phone, username, getType(), id);
 
-            FacesMessage facesMessage = new FacesMessage(FacesMessage.SEVERITY_INFO, "Record is Updated", null);
+            facesMessage = new FacesMessage(FacesMessage.SEVERITY_INFO, "Record is Updated", null);
             FacesContext.getCurrentInstance().addMessage(null, facesMessage);
-            
+            reload();
+
         } catch (Exception ex) {
             String message = ex.getMessage();
-            FacesMessage facesMessage = new FacesMessage(FacesMessage.SEVERITY_ERROR, message, null);
+            facesMessage = new FacesMessage(FacesMessage.SEVERITY_ERROR, message, null);
             FacesContext.getCurrentInstance().addMessage(null, facesMessage);
         }
 //        reset();
@@ -189,6 +195,7 @@ public class UserSelect {
 
             FacesMessage facesMessage = new FacesMessage(FacesMessage.SEVERITY_INFO, "Record is deleted", null);
             FacesContext.getCurrentInstance().addMessage(null, facesMessage);
+            reload();
         } catch (Exception ex) {
             String message = ex.getMessage();
             FacesMessage facesMessage = new FacesMessage(FacesMessage.SEVERITY_ERROR, message, null);
@@ -202,5 +209,10 @@ public class UserSelect {
         phone = "";
         email = "";
         username = "";
+    }
+
+    public void reload() throws IOException {
+        ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+        ec.redirect(((HttpServletRequest) ec.getRequest()).getRequestURI());
     }
 }

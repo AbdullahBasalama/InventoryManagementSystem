@@ -2,7 +2,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
@@ -43,15 +42,16 @@
                                     <h3>search </h3>
                                 </tr>
                                 <tr>
-                                    <h:form>
+                                    
                                     <h:outputText value="Select ID"/>
                                     <h:selectOneMenu value="#{userSelect.id}"  >
                                         <f:selectItems value="#{userSelect.fillId}" />
+                                        <f:selectItem itemValue="0" itemLabel="select ID"  />
                                     </h:selectOneMenu>
                                     <!-- command button should selects everything 
                                     <h:commandButton value="select" action="#{selectCustomer.customerData}" />
                                     -->
-                                    </h:form>
+                                    
                                 </tr>
                                 <tr>
                                     <td>Username:</td>  
@@ -81,14 +81,13 @@
                                         <h:outputText value="Specialty"/>
                                     </td>
                                     <td>
-                                        <h:form>
-                                            
-                                            <h:selectOneMenu value="#{userSelect.type}"  >
-                                                <f:selectItem itemValue="admin" itemLabel="Admin" />
-                                                <f:selectItem itemValue="user" itemLabel="User" />
-                                            </h:selectOneMenu>
-
-                                        </h:form>
+                                        <h:selectOneMenu value="#{userSelect.type}"  >
+                                            <!--
+                                                 <f:selectItem itemLabel="select specialty" />
+                                            -->
+                                            <f:selectItem itemValue="admin" itemLabel="Admin" />
+                                            <f:selectItem itemValue="user" itemLabel="User" />                                                
+                                        </h:selectOneMenu>
                                     </td>
                                 </tr>  
                                 
@@ -149,7 +148,13 @@
 
                 <div class="column side" style="width: 10%;">
                     <h2>Side</h2>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit..</p>
+                    <p>Here I should do these things: </p>
+                    <ul>
+                        <li>make the table looks bigger</li>
+                        <li>If id is chosen then we press update button
+                            it'll update whatever in the type
+                        </li>
+                    </ul>              
                 </div>
             </div>
             <!--   -->

@@ -38,13 +38,14 @@ public class DB {
       
         return rs ;
     }
+    
         // this method used in the userSelect.java to get the values of the user.
     public ResultSet select(String sql, int p1) throws Exception {
         connect();
         stmnt = conn.prepareStatement(sql);
         stmnt.setInt(1, p1);
-        rs = stmnt.executeQuery();       
-      
+        rs = stmnt.executeQuery();
+        
         return rs ;
     }
     
