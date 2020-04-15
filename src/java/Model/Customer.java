@@ -10,7 +10,7 @@ package Model;
  * @author D7
  */
 public class Customer {
-       private int cid;
+    private int cid;
     private String fullname;
     private String address;
     private String phone;
