@@ -77,7 +77,7 @@ public class DB {
         releaseResourcesNo();        
     }
     
-    //    this update statement used in UserSelect.java to update the user info
+    //    this update statement used in UserSelect.java to update the user info in DB
     //    update users set name=?,address=?, email=?, phone=?, username=?,type=? where id=?;
     public void update(String sql, String p1, String p2, String p3, String p4, String p5, String p6, int p7)throws Exception {
         connect();
@@ -95,7 +95,38 @@ public class DB {
         releaseResourcesNo();        
     }
     
-    // used in UserSelect.java to delete a user
+    //  this update statement used in SelectSupplier.java to update the supplier info in DB
+    // "update suppliers set fullname=?, company=?, email=?, phone=? where sid=? "
+     public void update(String sql, String p1, String p2, String p3, String p4, int p5) throws Exception {
+        connect();
+        stmnt = conn.prepareStatement(sql);
+        
+        stmnt.setString(1, p1);
+        stmnt.setString(2, p2);
+        stmnt.setString(3, p3);
+        stmnt.setString(4, p4);
+        stmnt.setInt(5,p5);
+        
+        stmnt.executeUpdate();
+        releaseResourcesNo();        
+    }
+     
+      //  this insert statement used in SelectSupplier.java to insert to the supplier table in DB
+     // "insert into suppliers (fullname, company, email, phone) values (?,?,?,?) "
+    public void update(String sql, String p1, String p2, String p3, String p4) throws Exception {
+        connect();
+        stmnt = conn.prepareStatement(sql);
+        
+        stmnt.setString(1, p1);
+        stmnt.setString(2, p2);
+        stmnt.setString(3, p3);
+        stmnt.setString(4, p4);
+                
+        stmnt.executeUpdate();
+        releaseResourcesNo();        
+    }
+    
+    // used in UserSelect.java, SelectSupplier.java to delete 
     public void update(String sql, int p1)throws Exception {
         connect();
         stmnt = conn.prepareStatement(sql);

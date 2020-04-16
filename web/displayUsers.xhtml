@@ -48,9 +48,9 @@
                                         <f:selectItems value="#{userSelect.fillId}" />
                                         <f:selectItem itemValue="0" itemLabel="select ID"  />
                                     </h:selectOneMenu>
-                                    <!-- command button should selects everything 
-                                    <h:commandButton value="select" action="#{selectCustomer.customerData}" />
-                                    -->
+                                    
+                                    <h:commandButton style="margin: 0 30px 0 30px" action="#{userSelect.select()}" value="select"/>   
+                                   
                                     
                                 </tr>
                                 <tr>
@@ -95,7 +95,7 @@
                         </table>
 
                         <div class="control">
-                            <h:commandButton action="#{userSelect.select()}" value="select"/>
+                            
                             <h:commandButton action="#{userSelect.update()}" value="update"/>
                             <h:commandButton action="#{userSelect.delete()}" value="delete"/> 
                             <h:commandButton action="#{userSelect.reset()}" value="Reset"/> 
