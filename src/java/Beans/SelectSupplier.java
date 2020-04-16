@@ -1,4 +1,3 @@
-
 package Beans;
 
 import javax.faces.bean.ManagedBean;
@@ -11,7 +10,6 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 
-
 @ManagedBean
 @RequestScoped
 public class SelectSupplier {
@@ -21,7 +19,7 @@ public class SelectSupplier {
     private String company;
     private String phone;
     private String email;
-    
+
     public SelectSupplier() {
     }
 
@@ -64,26 +62,25 @@ public class SelectSupplier {
     public void setEmail(String email) {
         this.email = email;
     }
-    
+
     // -------------------------------- functions ----------------------------------------//
-    
     /**
-     * select function selects all the fields of the supplier based on the
-     * sid. 
+     * select function selects all the fields of the supplier based on the sid.
      */
-    public void insert(){
-        
+    public void insert() {
+
         DB db = new DB();
         FacesMessage facesMessage;
 
         try {
+            if (check()) {
+                String sql = "insert into suppliers (fullname, company, email, phone) values (?,?,?,?) ";
+                db.update(sql, fullname, company, email, phone);
 
-            String sql = "insert into suppliers (fullname, company, email, phone) values (?,?,?,?) ";
-            db.update(sql, fullname, company, email, phone);
-
-            facesMessage = new FacesMessage(FacesMessage.SEVERITY_INFO, "New Record is entered", null);
-            FacesContext.getCurrentInstance().addMessage(null, facesMessage);
-            reload();
+                facesMessage = new FacesMessage(FacesMessage.SEVERITY_INFO, "New Record is entered", null);
+                FacesContext.getCurrentInstance().addMessage(null, facesMessage);
+                reload();
+            }
 
         } catch (Exception ex) {
             String message = ex.getMessage();
@@ -91,20 +88,20 @@ public class SelectSupplier {
             FacesContext.getCurrentInstance().addMessage(null, facesMessage);
         }
         reset();
-        
+
     }
+
     public void select() {
         DB db = new DB();
         ResultSet rs = null;
         try {
 
             String sql = "select * from suppliers where sid=?";
-            
-            /**
-             * this function establishes connection and do the select
-             * and return a result set of the result;
-             */
 
+            /**
+             * this function establishes connection and do the select and return
+             * a result set of the result;
+             */
             rs = db.select(sql, getSid());
 
             if (rs.next()) {
@@ -112,7 +109,7 @@ public class SelectSupplier {
                 phone = rs.getString("phone");
                 email = rs.getString("email");
                 company = rs.getString("company");
-                
+
             } else {
                 FacesMessage facesMessage = new FacesMessage(FacesMessage.SEVERITY_ERROR, "There is no sush supplier", null);
                 FacesContext.getCurrentInstance().addMessage(null, facesMessage);
@@ -132,20 +129,22 @@ public class SelectSupplier {
     }
 
     /**
-     * update function takes all the info of the supplier and inserts it in the DB
+     * update function takes all the info of the supplier and inserts it in the
+     * DB
      */
     public void update() {
         DB db = new DB();
         FacesMessage facesMessage;
 
         try {
+            if (check()) {
+                String sql = "update suppliers set fullname=?, company=?, email=?, phone=? where sid=? ";
+                db.update(sql, fullname, company, email, phone, sid);
 
-            String sql = "update suppliers set fullname=?, company=?, email=?, phone=? where sid=? ";
-            db.update(sql, fullname, company, email, phone, sid);
-
-            facesMessage = new FacesMessage(FacesMessage.SEVERITY_INFO, "Record is Updated", null);
-            FacesContext.getCurrentInstance().addMessage(null, facesMessage);
-            reload();
+                facesMessage = new FacesMessage(FacesMessage.SEVERITY_INFO, "Record is Updated", null);
+                FacesContext.getCurrentInstance().addMessage(null, facesMessage);
+                reload();
+            }
 
         } catch (Exception ex) {
             String message = ex.getMessage();
@@ -155,7 +154,6 @@ public class SelectSupplier {
         reset();
     }
 
-    
 //    /**
 //     * delete function deletes the supplier based on his supplierID (sid)
 //     */
@@ -177,6 +175,7 @@ public class SelectSupplier {
         }
     }
 //
+
     public void reset() {
         fullname = "";
         company = "";
@@ -188,6 +187,40 @@ public class SelectSupplier {
         ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
         ec.redirect(((HttpServletRequest) ec.getRequest()).getRequestURI());
     }
-    
-    
+
+    public boolean check() throws Exception {
+        
+        if (fullname.equals("") && company.equals("") && phone.equals("") && email.equals("") ) {
+            FacesMessage facesMessage = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Fill all fields, please!", null);
+            FacesContext.getCurrentInstance().addMessage(null, facesMessage);
+            return false;
+        }
+        
+        if (fullname.equals("")) {
+            FacesMessage facesMessage = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Enter your Name, please!", null);
+            FacesContext.getCurrentInstance().addMessage(null, facesMessage);
+            return false;
+        }
+        if (company.equals("")) {
+            FacesMessage facesMessage = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Fill Your company Name, please!", null);
+            FacesContext.getCurrentInstance().addMessage(null, facesMessage);
+            return false;
+        }
+        if (phone.equals("")) {
+            FacesMessage facesMessage = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Enter phone number, please!", null);
+            FacesContext.getCurrentInstance().addMessage(null, facesMessage);
+            return false;
+        }
+        if (email.equals("")) {
+            FacesMessage facesMessage = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Enter the email please!", null);
+            FacesContext.getCurrentInstance().addMessage(null, facesMessage);
+            return false;
+        }
+        return true;
+    }
+    /**
+     * private int sid; private String fullname; private String company; private
+     * String phone; private String email;
+     */
+
 }

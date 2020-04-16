@@ -25,6 +25,7 @@
             <div class="header">
                 <h1>IMS</h1>
                 <p>Welcome to this page of the inventory management system</p>
+                <img></img>
             </div>
 
             <div class="topnav" >
@@ -44,15 +45,15 @@
                                 </tr>
                                 <tr>
                                     <h:outputText value="Select supplier ID"/>
-                                    <h:selectOneMenu value="#{selectSupplier.sid}"  >
+                                    <h:selectOneMenu value="#{selectSupplier.sid}" >
                                         <f:selectItems value="#{fillSupplier.supplierId}" />
-                                        <f:selectItem itemValue="0" itemLabel="select ID    " />
+                                        <f:selectItem itemValue="0" itemLabel="select ID" />
                                     </h:selectOneMenu>
                                     <h:commandButton id="select" style="margin: 0px 30px 0 30px;" value="select" action="#{selectSupplier.select()}" />
                                 </tr>
                                 <tr>
                                     <td>Name:</td>
-                                    <td> <p:inputText value="#{selectSupplier.fullname}" maxlength="50"/> </td>
+                                    <td> <p:inputText value="#{selectSupplier.fullname}" maxlength="50" /> </td>
                                 </tr>
 
                                 <tr> 

@@ -1,5 +1,5 @@
-
 package Beans;
+
 import DB.DB;
 import BCrypt.*;
 import java.io.IOException;
@@ -11,21 +11,20 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 
-
 @ManagedBean
 @RequestScoped
 
 public class SignUp {
-    
-    private String name ;
-    private String address ;
-    private String phone ;
+
+    private String name;
+    private String address;
+    private String phone;
     private String email;
-    private String username ;
-    private String type ;
-    private String password ;
+    private String username;
+    private String type;
+    private String password;
     private String rePassword;
-        
+
     public SignUp() {
     }
 
@@ -92,55 +91,57 @@ public class SignUp {
     public void setRePassword(String rePassword) {
         this.rePassword = rePassword;
     }
-    
-    public String sign(){
-        
-        FacesMessage facesMessage;    
+
+    public String sign() {
+
+        FacesMessage facesMessage;
         String pageTransactionMessage = "";
         try {
             if (getPassword().equals(getRePassword())) { // if the two passwords do not matches then show else message
-                
-                /** 
-                 * here we will insert all information to the DB in this private method called signUpHelper(); 
-                 * and it will return either (success) or (fail) so based on that we'll show the message of success or failure
-                 * 
+
+                /**
+                 * here we will insert all information to the DB in this private
+                 * method called signUpHelper(); and it will return either
+                 * (success) or (fail) so based on that we'll show the message
+                 * of success or failure
+                 *
                  */
-                
                 pageTransactionMessage = signUpHelper();
-                
-                if(pageTransactionMessage.equals("success")){
+
+                if (pageTransactionMessage.equals("success")) {
                     reload();
                     facesMessage = new FacesMessage(FacesMessage.SEVERITY_INFO, "Record been inserted", null);
                     FacesContext.getCurrentInstance().addMessage(null, facesMessage);
-                }
-                else{
+                } else {
                     facesMessage = new FacesMessage(FacesMessage.SEVERITY_INFO, "Nothing has been updated", null);
                     FacesContext.getCurrentInstance().addMessage(null, facesMessage);
-                }                
-            } 
-            else {
+                }
+            } else {
                 throw new Exception("Entered password do not match");
-            }  
-        }
-        catch(Exception ex){
-            String  message = ex.getMessage(); 
+            }
+        } catch (Exception ex) {
+            String message = ex.getMessage();
             facesMessage = new FacesMessage(FacesMessage.SEVERITY_ERROR, message, null);
-            FacesContext.getCurrentInstance().addMessage(null,  facesMessage);            
-        }        
-        return pageTransactionMessage ;
+            FacesContext.getCurrentInstance().addMessage(null, facesMessage);
+        }
+        return pageTransactionMessage;
     }
-    
+
     private String signUpHelper() throws Exception {
         FacesMessage facesMessage;
         DB db = new DB();
 
         try {
-            
-           String sql ="insert into users (fullname, address, phone, email, username, password, type) values (?, ?, ?, ?, ?,md5(?), ?)";
+            if (check()) {
+                String sql = "insert into users (fullname, address, phone, email, username, password, type) values (?, ?, ?, ?, ?,md5(?), ?)";
+                db.update(sql, getName(), getAddress(), getPhone(), getEmail(), getUsername(), getPassword(), getType());
+                return "success";
+            }
+            else{
+                return "fail";
+            }
+                
 
-            db.update(sql, getName(), getAddress(), getPhone(), getEmail(), getUsername(), getPassword(), getType());
-            return "success";
-            
         } catch (Exception ex) {
             String message = ex.getMessage();
             facesMessage = new FacesMessage(FacesMessage.SEVERITY_ERROR, message, null);
@@ -148,9 +149,54 @@ public class SignUp {
             return "fail";
         }
     }
-    
-     public void reload() throws IOException {
+
+    public void reload() throws IOException {
         ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
         ec.redirect(((HttpServletRequest) ec.getRequest()).getRequestURI());
     }
+
+    public boolean check() throws Exception {
+        
+        if (password.equals("")) {
+            FacesMessage facesMessage = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Enter the password please!", null);
+            FacesContext.getCurrentInstance().addMessage(null, facesMessage);
+            return false;
+        }
+        if (username.equals("")) {
+            FacesMessage facesMessage = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Enter the username please!", null);
+            FacesContext.getCurrentInstance().addMessage(null, facesMessage);
+            return false;
+        }
+        if (name.equals("")) {
+            FacesMessage facesMessage = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Enter the name, please!", null);
+            FacesContext.getCurrentInstance().addMessage(null, facesMessage);
+            return false;
+        }
+        if (address.equals("")) {
+            FacesMessage facesMessage = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Enter the address, please!", null);
+            FacesContext.getCurrentInstance().addMessage(null, facesMessage);
+            return false;
+        }
+        if (phone.equals("")) {
+            FacesMessage facesMessage = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Enter phone number, please!", null);
+            FacesContext.getCurrentInstance().addMessage(null, facesMessage);
+            return false;
+        }
+        if (email.equals("")) {
+            FacesMessage facesMessage = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Enter the email please!", null);
+            FacesContext.getCurrentInstance().addMessage(null, facesMessage);
+            return false;
+        }
+                
+        return true;
+    }
+    /**
+     * private String name;
+     * private String address;
+     * private String phone;
+     * private String email; 
+     * private String username; 
+     * private String type;
+     * private String password;
+     */
 }

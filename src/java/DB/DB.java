@@ -30,8 +30,8 @@ public class DB {
         stmnt = conn.prepareStatement(sql);
         stmnt.setString(1, p1);
         stmnt.setString(2, p2);
-        rs = stmnt.executeQuery();      
-      
+        rs = stmnt.executeQuery();
+
         return rs ;
     }
 
@@ -122,6 +122,29 @@ public class DB {
         stmnt.setString(3, p3);
         stmnt.setString(4, p4);
                 
+        stmnt.executeUpdate();
+        releaseResourcesNo();        
+    }
+    
+    // used in SelectCategory.java for update
+    public void update(String sql, String p1,int p2)throws Exception {
+        connect();
+        stmnt = conn.prepareStatement(sql);
+        
+        stmnt.setString(1, p1);
+        stmnt.setInt(2, p2);
+       
+        stmnt.executeUpdate();
+        releaseResourcesNo();        
+    }
+    
+    // used in SelectCategory.java 
+    public void update(String sql, String p1)throws Exception {
+        connect();
+        stmnt = conn.prepareStatement(sql);
+        
+        stmnt.setString(1, p1);
+       
         stmnt.executeUpdate();
         releaseResourcesNo();        
     }

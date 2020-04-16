@@ -29,10 +29,8 @@ public class FillSupplier {
         String sql = "select * from suppliers";
         
         // ------------ get supplier id from DB -------------------//
-//        ResultSet rs2 = null;
+
         supplierId = new LinkedList<> ();
-//        DB db2 = new DB();
-//        String sql2 = "select sid from suppliers";
         
         try{
             
@@ -48,15 +46,7 @@ public class FillSupplier {
                 
                 supplierId.add(supplier.getSid());
                 supplierInfo.add(supplier);                
-            }
-            
-//            rs2 = db2.select(sql2);
-//            while(rs.next()){
-//                User us2 = new User();
-//                us2.setId(rs2.getInt("id"));
-//                supplierId.add(us2.getId());
-//            }
-            
+            } 
             
         }catch(Exception ex){
             String  message = ex.getMessage(); 
@@ -67,7 +57,6 @@ public class FillSupplier {
         finally {
             try{
                 db.releaseResources();
-//                db2.releaseResources();
             }
             catch (Exception ex) {
                 String message = ex.getMessage();
