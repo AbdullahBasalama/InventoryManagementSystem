@@ -23,7 +23,7 @@ public class FillCategory {
         ResultSet rs = null;
         categoryInfo = new LinkedList<>();
         DB db = new DB();
-        String sql = "select * from category";
+        String sql = "select * from categories";
 
         // ------------ get category id from DB -------------------//
         categoryId = new LinkedList<>();

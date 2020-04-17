@@ -1,0 +1,175 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <h:head>
+        <title>Display Users</title>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <h:outputStylesheet name="css/generalPageTheme.css"/>
+        <h:outputStylesheet name="css/navegation.css"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"/>
+        <style>
+            .control input {
+                margin: 10px 15px 10px 12px;
+            }
+        </style>
+    </h:head>
+
+    <h:body>
+        <h:form> 
+            <div class="header">
+                <h1>IMS</h1>
+                <p>Welcome to this page of the inventory management system</p>
+            </div>
+
+            <div class="topnav" >
+                <label>Welcome </label>
+            </div>
+            <!--   -->
+            <div class="row">
+                <!--  this is the side column from the left  -->
+                <h:form>
+                    <div class="column side" style="padding: 25px; width: 40%;" >
+
+                        <table border="0">
+
+                            <tbody>
+                                <tr>
+                                    <h3>search </h3>
+                                </tr>
+                                <tr>
+                                <p:outputLabel for="@next" value="Select ID " />
+                                <p:selectOneMenu id="city" value="#{productBean.selectedItem}" effect="fold" editable="true">
+                                    <f:selectItem itemLabel="Select One" itemValue="" />
+                                    <f:selectItems value="#{productBean.options}" />
+                                </p:selectOneMenu>
+                                <h:commandButton value="select" action="#{productBean.productBeanSelectBtn()}" />
+                                </tr>
+                               
+                                <tr>
+                                    <td>search by name</td>
+                                    <td> <p:inputText value="#{productBean.nameSearch}" maxlength="20"/></td>
+                                    <td><h:commandButton value="select" action="#{productBean.productBeanSearchByName()}" /></td>
+                                </tr>
+
+                                <tr>
+                                    <td>Name:</td>
+                                    <td> <p:inputText value="#{productBean.name}" maxlength="50"/> </td>
+                                </tr>
+
+                                <tr> 
+                                    <td>description</td>
+                                    <td> <p:inputText value="#{productBean.description}"  maxlength="50" /> </td>
+                                </tr>
+                                <tr>
+                                    <td>price</td>
+                                    <td> <p:inputText value="#{productBean.price}"  maxlength="50" /> </td>
+                                </tr>
+                                <tr>
+                                    <td>quantity</td>
+                                    <td> <p:inputText value="#{productBean.quantity}"  maxlength="20" /> </td>
+                                </tr>
+                                <tr>
+                                    <h:outputText value="Select Category ID"/>
+                                    <h:selectOneMenu value="#{productBean.selectedItemcategory}"  >
+                                        <f:selectItems value="#{productBean.categoryID}" />
+                                    </h:selectOneMenu>
+                                </tr>
+                                <tr>
+                                    <h:outputText value="Select Supplier ID"/>
+                                    <h:selectOneMenu value="#{productBean.selectedItemSupplier}"  >
+                                        <f:selectItems value="#{productBean.supplierID}" />
+                                    </h:selectOneMenu>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="control">
+                            <h:commandButton action="#{productBean.productBeanInsert}" value="insert"/>
+                            <h:commandButton action="#{productBean.productBeanUpdate}" value="update"/>
+                            <h:commandButton action="#{productBean.productBeanDelete}" value="delete"/> 
+                            <h:commandButton action="#{productBean.reset()}" value="Reset"/> 
+
+                            <h:messages infoStyle="color:green" errorStyle="color:red"/>
+                        </div>
+                    </div>
+                </h:form>
+                <!-- this the column in the middle page  -->
+                <div class="column middle" style="width: 50%;">
+                    <h1>  <h:outputText value="Products Detail" /></h1>
+                    <h:dataTable border="1" value="#{productBean.productData}" var="user" >
+                        <h:column>
+                            <f:facet name="header">ID</f:facet>
+                                #{user.pid}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Name</f:facet>
+                                #{user.name}
+                        </h:column>
+
+                        <h:column>
+                            <f:facet name="header">description</f:facet>
+                                #{user.description}
+                        </h:column>
+
+                        <h:column>
+                            <f:facet name="header">price</f:facet>
+                                #{user.price}
+                        </h:column>
+
+                        <h:column>
+                            <f:facet name="header">quantity</f:facet>
+                                #{user.quantity}
+                        </h:column>
+
+                        <h:column>
+                            <f:facet name="header">Category</f:facet>
+                                #{user.catid}
+                        </h:column>
+
+                        <h:column>
+                            <f:facet name="header">supplier</f:facet>
+                                #{user.sid}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Register Date</f:facet>
+                                #{user.date}
+                        </h:column>
+
+                    </h:dataTable>
+                </div>
+                <div class="column side" style="width: 10%;">
+                    <h1>  <h:outputText value="Category Detail" /></h1>
+                    <h:dataTable border="1" value="#{productBean.catData}" var="cat" >
+                        <h:column>
+                            <f:facet name="header">ID</f:facet>
+                                #{cat.catid}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Name</f:facet>
+                                #{cat.catName}
+                        </h:column>
+
+
+                    </h:dataTable>
+                </div>
+
+
+              
+            <!--   -->
+
+
+            <div class="footer">
+                <p>This is the footer </p>
+            </div>
+
+
+       </div>  </h:form>
+    </h:body>
+</html>
+

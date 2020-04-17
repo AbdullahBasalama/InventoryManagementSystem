@@ -7,7 +7,7 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <h:head>
-        <title>Display Customers</title>
+        <title>Display Users</title>
         <meta charset="utf-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
         <h:outputStylesheet name="css/generalPageTheme.css"/>
@@ -46,14 +46,16 @@
                                     <h:outputText value="Select ID"/>
                                     <h:selectOneMenu value="#{selectCustomer.selectedItem}"  >
                                         <f:selectItems value="#{selectCustomer.options}" />
+                                        
                                     </h:selectOneMenu>
+
                                     <h:commandButton value="select" action="#{selectCustomer.selectCustomerBtn()}" />
-                                </tr>
-                                <tr>
+
                                     <td>search by phone</td>
                                     <td> <p:inputText value="#{selectCustomer.phoneSearch}" maxlength="20"/></td>
                                     <td><h:commandButton value="select" action="#{selectCustomer.selectCustomerByPhone()}" /></td>
                                 </tr>
+
 
                                 <tr>
                                     <td>Name:</td>
@@ -92,7 +94,7 @@
                 </h:form>
                 <!-- this the column in the middle page  -->
                 <div class="column middle" style="width: 50%;">
-                    <h1>  <h:outputText value="Customrs Detail" /></h1>
+                    <h1>  <h:outputText value="Employee Detail" /></h1>
                     <h:dataTable border="1" value="#{selectCustomer.cusData}" var="user" >
                         <h:column>
                             <f:facet name="header">ID</f:facet>
@@ -138,9 +140,12 @@
             </div>
             <!--   -->
 
+
             <div class="footer">
                 <p>This is the footer </p>
             </div>
+
+
         </h:form>
     </h:body>
 </html>

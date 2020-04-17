@@ -45,7 +45,7 @@ public class SelectCategory {
 
         try {
             if (check()) {
-                String sql = "insert into category (name) values (?) ";
+                String sql = "insert into categories (name) values (?) ";
                 db.update(sql, name);
 
                 facesMessage = new FacesMessage(FacesMessage.SEVERITY_INFO, "New Record is Entered", null);
@@ -66,7 +66,7 @@ public class SelectCategory {
         ResultSet rs = null;
         try {
             if (catid != 0) {
-                String sql = "select * from category where catid=?";
+                String sql = "select * from categories where catid=?";
                 rs = db.select(sql, getCatid());
 
                 if (rs.next()) {
@@ -100,7 +100,7 @@ public class SelectCategory {
 
         try {
             if (check()) {
-                String sql = "update category set name=? where catid=? ";
+                String sql = "update categories set name=? where catid=? ";
                 db.update(sql, name, catid);
 
                 facesMessage = new FacesMessage(FacesMessage.SEVERITY_INFO, "Record is Updated", null);
@@ -121,7 +121,7 @@ public class SelectCategory {
         DB db = new DB();
         try {
 
-            String sql = "delete from category where catid=?";
+            String sql = "delete from categories where catid=?";
             db.update(sql, catid);
 
             FacesMessage facesMessage = new FacesMessage(FacesMessage.SEVERITY_INFO, "Record is deleted", null);

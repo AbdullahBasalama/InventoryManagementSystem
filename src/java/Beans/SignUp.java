@@ -1,7 +1,7 @@
 package Beans;
 
 import DB.DB;
-import BCrypt.*;
+
 import java.io.IOException;
 
 import javax.faces.application.FacesMessage;

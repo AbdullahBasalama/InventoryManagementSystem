@@ -39,6 +39,8 @@ public class SelectCustomer {
     private String company;
     private String date;
     private String phoneSearch;
+    
+   
 
     public String getPhoneSearch() {
         return phoneSearch;
@@ -50,10 +52,10 @@ public class SelectCustomer {
 
     public SelectCustomer() {
         cusData = new LinkedList<>();
-
+      
         try {
             DB dbm = new DB();
-            ResultSet rs = dbm.select("SELECT * from customers;");
+            ResultSet rs = dbm.select1("SELECT * from customers;");
             while (rs.next()) {
                 Customer c = new Customer();
                 c.setCid(rs.getInt("cid"));
@@ -68,7 +70,7 @@ public class SelectCustomer {
 
             }
 
-            dbm.releaseResources22();
+            dbm.releaseResources1();
         } catch (Exception ex) {
             String message = ex.getMessage();
             FacesMessage facesMessage = new FacesMessage(message);
@@ -81,14 +83,14 @@ public class SelectCustomer {
     public void selectCustomerBtn() {
         try {
             DB dbm = new DB();
-            ResultSet rs = dbm.select("select * from customers where cid=" + getSelectedItem());
+            ResultSet rs = dbm.select1("select * from customers where cid=" + getSelectedItem());
             rs.next();
             fullname = rs.getString("fullname");
             address = rs.getString("address");
             email = rs.getString("email");
             phone = rs.getString("phone");
             company = rs.getString("company");
-            dbm.releaseResources22(); //must close rs only after checking its number of rows.
+            dbm.releaseResources1(); //must close rs only after checking its number of rows.
         } catch (Exception ex) {
             String message = ex.getMessage();
             FacesMessage facesMessage = new FacesMessage(FacesMessage.SEVERITY_ERROR, message, null);
@@ -103,7 +105,7 @@ public class SelectCustomer {
         try {
             if(Found()){
             DB dbm = new DB();
-            ResultSet rs = dbm.select("SELECT * from customers where phone ='"+phoneSearch+"' ;");
+            ResultSet rs = dbm.select1("SELECT * from customers where phone ='"+phoneSearch+"' ;");
             while (rs.next()) {
                 Customer c = new Customer();
                 c.setCid(rs.getInt("cid"));
@@ -117,7 +119,7 @@ public class SelectCustomer {
                 cusData.add(c);
             }
             
-            dbm.releaseResources22();
+            dbm.releaseResources1();
             }
             else
             throw new Exception("Customer phone Not Found");
@@ -138,7 +140,7 @@ public class SelectCustomer {
             String Q = "insert into customers (fullname,address,email,phone,company) values"
                     + "('" + fullname + "','" + address + "', '" + email + "','" + phone + "','" + company + "');";
             dbm.InsertUpdateDelete(Q);
-            dbm.releaseResources22();
+            dbm.releaseResources1();
             FacesMessage facesMessage = new FacesMessage(FacesMessage.SEVERITY_INFO, "Your record has inserted", null);
             FacesContext.getCurrentInstance().addMessage(null, facesMessage);
             reload();
@@ -158,9 +160,9 @@ public class SelectCustomer {
     {
         
         DB dbm = new DB();
-        ResultSet rs = dbm.select("select * from customers where phone='"+phoneSearch+"' ;");
+        ResultSet rs = dbm.select1("select * from customers where phone='"+phoneSearch+"' ;");
         boolean found = rs.next(); //if there is a row will return true
-        dbm.releaseResources22();
+        dbm.releaseResources1();
         
         if(found)
             return true;
@@ -180,7 +182,7 @@ public class SelectCustomer {
                     + " company = '" + company + "' "
                     + " where cid =" + selectedItem + ";";
             dbm.InsertUpdateDelete(Q);
-            dbm.releaseResources22();
+            dbm.releaseResources1();
             FacesMessage facesMessage = new FacesMessage(FacesMessage.SEVERITY_INFO, "Your record has updated", null);
             FacesContext.getCurrentInstance().addMessage(null, facesMessage);
             reload();
@@ -201,7 +203,7 @@ public class SelectCustomer {
 
             String sql = "delete from customers where cid=" + selectedItem;
             db.InsertUpdateDelete(sql);
-            db.releaseResources22();
+            db.releaseResources1();
             FacesMessage facesMessage = new FacesMessage(FacesMessage.SEVERITY_INFO, "Record is deleted", null);
             FacesContext.getCurrentInstance().addMessage(null, facesMessage);
              reload();

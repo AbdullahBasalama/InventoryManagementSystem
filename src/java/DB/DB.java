@@ -7,7 +7,7 @@ import javax.faces.context.FacesContext;
 public class DB {
     
     private final String DB_URL="jdbc:mysql://localhost/inventory";
-    private final String NAME="root";
+    private final String USER="root";
     private final String PASS="123456";
     
     Connection conn = null ;
@@ -22,8 +22,11 @@ public class DB {
     
     public void connect () throws Exception {
         Class.forName("com.mysql.jdbc.Driver");
-        this.conn = DriverManager.getConnection(DB_URL, NAME, PASS);
+        this.conn = DriverManager.getConnection(DB_URL, USER, PASS);
     }
+    
+    
+     
     
     public ResultSet select(String sql, String p1, String p2) throws Exception {
         connect();
@@ -182,10 +185,17 @@ public class DB {
     
     public void createConnection() throws Exception {
         Class.forName("com.mysql.jdbc.Driver");
-        conn = DriverManager.getConnection(DB_URL, NAME, PASS);
+        conn = DriverManager.getConnection(DB_URL, USER, PASS);
     }
-
-    public void releaseResources22() throws Exception {
+    
+    public ResultSet select1(String Q) throws Exception {
+        createConnection();
+        stmt = conn.createStatement();
+        rs = stmt.executeQuery(Q);
+        return rs;
+    }
+        
+    public void releaseResources1() throws Exception {
         try {
             if (stmt != null) {
                 stmt.close();
@@ -214,13 +224,6 @@ public class DB {
         }
 
     }
-    //this Statement already defined
-//    public ResultSet select(String Q) throws Exception {
-//        createConnection();
-//        stmt = conn.createStatement();
-//        rs = stmt.executeQuery(Q);
-//        return rs;
-//    }
 
     public void InsertUpdateDelete(String Q) throws Exception {
         createConnection();

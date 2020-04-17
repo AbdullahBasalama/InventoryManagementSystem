@@ -1,6 +1,6 @@
 package Beans;
 
-import BCrypt.*;
+
 import DB.*;
 import java.sql.ResultSet;
 import javax.faces.application.FacesMessage;
